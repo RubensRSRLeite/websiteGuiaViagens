@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymrleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+ <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>Insert title here</title>
+</head>
+<body>
+	<table style="width: 50%; margin: auto; border-radius: 50px;">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Email</th>
+				<th>Alterar</th>
+				<th>Excluir</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="adm:${admins}">
+				<td th:text="${adm.id}"></td>
+				<td th:text="${adm.nome}"></td>
+				<td th:text="${adm.email}"></td>
+				<td><a th:href="@{/alterar(id=${adm.id})}"><i class="material-icons">swap_horiz</i></a></td>
+				
+			</tr>
+		</tbody>	
+	</table>
+	<ul class="pagination">
+		    <li th:class="${pagAtual == 1 ? 'disabled' : 'waves-effect'}"><a th:href="${pagAtual > 1 ? pagAtual - 1 : '#'}"><i class="material-icons">chevron_left</i></a></li>
+		    
+				<li th:class="${pagAtual == p ? 'active blue' : 'waves-effect'}" th:each="p:${numPag}"><a th:href="${p}"><span th:text="${p}"></span></a></li>
+		    
+		    <li th:class="${pagAtual == totalPages ? 'disabled' : 'waves-effect'}"><a th:href="${pagAtual < totalPages ? pagAtual + 1 : '#'}"><i class="material-icons">chevron_right</i></a></li>
+		 </ul>
+		 
+</body>
+</html>

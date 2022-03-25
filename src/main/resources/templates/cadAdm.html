@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymrleaf.org">
+<head>
+ <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+<meta charset="ISO-8859-1">
+<title>Cadastro de Clientes</title>
+	<style>
+	
+		.msg{
+			width: 50%;
+			margin: auto;
+		}
+		
+		.erro{
+			background-color: red;
+		}
+		
+		.sucesso{
+			background-color: lightgreen;
+		}
+	
+	</style>
+</head>
+<body>
+
+	<div class="row" style="background-image: linear-gradient(45deg, crimson, violet, purple);">
+	
+    <form method="post" style="width: 50%; margin: auto; padding: 100px; background: white; border-radius: 50px" action="salvarAdmin">
+    <h3>Cadastro de Administrador</h3>
+      <div class="row">
+        <div class="input-field col s6">
+          <input name="nome" id="first_name" type="text" class="validate"  required>
+          <label for="first_name">Nome</label>
+        </div>
+        <div class="input-field col s6">
+          <input name="sobrenome"  id="last_name" type="text" class="validate"  required>
+          <label for="last_name">Sobrenome</label>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input name="senha"  id="password" type="password" class="validate"  required>
+          <label for="password">Senha</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input name="email"  id="email" type="email" class="validate" required>
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row" style="width: 15%; margin: auto;">
+        <input type="submit" name="botao">
+      </div>
+      <!--<div th:replace="fragment/msg"></div><!-- colocar link do thymeleaf -->
+    </form>
+  </div>
+
+</body>
+</html>
