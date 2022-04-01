@@ -26,34 +26,40 @@
 	
 	</style>
 </head>
-<body>
+<body style="margin:0;">
+<header th:replace="fragment/padrao :: cabecalho"></header>
 
-	<div class="row" style="background-image: linear-gradient(45deg, crimson, violet, purple);">
+	<div class="row" 
+		style="
+			background-image: linear-gradient(18deg, #4E008E, blue, #64FFC1, #B2FA46  );  
+			padding-top: 100px; 
+			padding-bottom: 200px;
+		">
 	
-    <form method="post" style="width: 50%; margin: auto; padding: 100px; background: white; border-radius: 50px" action="salvarAdmin">
+    <form method="post" 
+    	style="width: 50%; 
+    		margin: auto; 
+    		padding: 100px; 
+    		border: 20px solid #0CF25D ;
+    		background-image: linear-gradient( 18deg, #FFCA0B, white);
+    		border-radius: 80px" 
+    	action="salvarAdmin">
+    	<input type="hidden" name="id" th:value="${adm?.id}">
     <h3>Cadastro de Administrador</h3>
       <div class="row">
         <div class="input-field col s6">
-          <input name="nome" id="first_name" type="text" class="validate"  required>
+          <input name="nome" id="first_name" type="text" class="validate" th:value="${adm?.nome}" required>
           <label for="first_name">Nome</label>
         </div>
-        <div class="input-field col s6">
-          <input name="sobrenome"  id="last_name" type="text" class="validate"  required>
-          <label for="last_name">Sobrenome</label>
-        </div>
+        <div class="input-field col s12">
+         <input name="email"  id="email" type="email" class="validate"  th:value="${adm?.email}"  required>
+         <label for="email">Email</label>
       </div>
-      <div class="row">
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input name="senha"  id="password" type="password" class="validate"  required>
+          <input name="senha"  id="password" type="password" class="validate"  >
           <label for="password">Senha</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input name="email"  id="email" type="email" class="validate" required>
-          <label for="email">Email</label>
         </div>
       </div>
       <div class="row" style="width: 15%; margin: auto;">

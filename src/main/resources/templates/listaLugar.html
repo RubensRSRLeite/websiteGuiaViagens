@@ -2,7 +2,6 @@
 <html xmlns:th="http://thymrleaf.org">
 <head>
 <meta charset="utf-8">
- <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <!-- Compiled and minified JavaScript -->
@@ -11,24 +10,38 @@
 <title>Insert title here</title>
 </head>
 <body>
-<header th:replace="fragment/padrao :: cabecalho"></header>
+	<header th:replace="fragment/padrao :: cabecalho"></header>
+	
+	<form style="display:flex; width: 50%; margin: auto; justify-content: space-around;" action="/busca">
+	<div style="width: 50%; margin: auto; border-radius: 50px;">
+		<input type="submit" >
+	</div>
+		<div style="width: 50%; margin: auto; border-radius: 50px;">
+		<input type="search" placeholder="busque por..." name="buscar">
+	</div>
+	
+	</form>
+	
 	<table style="width: 50%; margin: auto; border-radius: 50px;">
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>Nome</th>
-				<th>Email</th>
+				<th>palavra Chave</th>
+				<th>Proposito</th>
+				<th>localização</th>
 				<th>Alterar</th>
 				<th>Excluir</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="adm:${admins}">
-				<td th:text="${adm.id}"></td>
-				<td th:text="${adm.nome}"></td>
-				<td th:text="${adm.email}"></td>
-				<td><a th:href="@{/alterar(id=${adm.id})}"><i class="material-icons">swap_horiz</i></a></td>
-				<td><a th:href="@{/excluir(id=${adm.id})}"><i class="material-icons">clear</i></a></td>
+			<tr th:each="lugar:${lugares}">
+				<td th:text="${lugar.id}"></td>
+				<td th:text="${lugar.palavraChave}"></td>
+				<td th:text="${lugar.proposito}"></td>
+				<td th:text="${lugar.localizacao}"></td>
+				<td><a th:href="@{/alterarLug(id=${lugar.id})}"><i class="material-icons">swap_horiz</i></a></td>
+				<td><a th:href="@{/excluirLug(id=${lugar.id})}"><i class="material-icons">clear</i></a></td>
+				
 				
 			</tr>
 		</tbody>	
@@ -40,6 +53,5 @@
 		    
 		    <li th:class="${pagAtual == totalPages ? 'disabled' : 'waves-effect'}"><a th:href="${pagAtual < totalPages ? pagAtual + 1 : '#'}"><i class="material-icons">chevron_right</i></a></li>
 		 </ul>
-		 
 </body>
 </html>

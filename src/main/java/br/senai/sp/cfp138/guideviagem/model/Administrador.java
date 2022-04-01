@@ -30,9 +30,17 @@ public class Administrador {
 	private String email;
 	@NotEmpty
 	private String senha;
+	
 	//metodo set que aplica o hash na senha
 	public void setSenha(String senha) {
 		this.senha = HashUtil.hash(senha);
+	}
+	
+	//seta o hash na senha
+	public void setSenhaComHash(String hash) {
+		this.senha = hash;
+		
+		
 	}
 	
 	

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.senai.sp.cfp138.guideviagem.model.Administrador;
 import br.senai.sp.cfp138.guideviagem.repository.AdminRepository;
+import br.senai.sp.cfp138.guideviagem.util.HashUtil;
 
 @Controller
 public class AdmController {
@@ -44,7 +45,23 @@ public class AdmController {
 			return"redirect:cadAdmin";
 		}
 		
-		//not #strings.isEmpty(mensagemErro)
+		// alterando ou inserindo
+		boolean alteracao = admin.getId() != null ? true : false;
+		//verifica se senha esta vazia
+		if(admin.getSenha().equals(HashUtil.hash(""))) {
+			if(!alteracao) {
+				//substring retirandio antes do @
+				String part = admin.getEmail().substring(0, admin.getEmail().indexOf("@"));
+				//settar a parte com a senha do admin
+				admin.setSenha(part);
+				//
+			} else {
+				// busca a senha atual no banco
+				String hash = admRep.findById(admin.getId()).get().getSenha();
+				//settar hash na senha
+				admin.setSenhaComHash(hash);
+			}
+		}
 		
 		try {
 			//salva no bd entidade (sem id)
@@ -65,7 +82,7 @@ public class AdmController {
 	@RequestMapping("listaAdmin/{page}")
 	public String listaAdmin(Model model, @PathVariable("page") int page) {
 		//paegable(pageRequest) que informa parâmetros da class
-		PageRequest pr = PageRequest.of(page-1, 1, Sort.by(Sort.Direction.ASC, "nome"));
+		PageRequest pr = PageRequest.of(page-1, 8, Sort.by(Sort.Direction.ASC, "nome"));
 		
 		// cria page de administrador por parametros pelo repository
 		Page<Administrador> pagina = admRep.findAll(pr);
@@ -80,7 +97,7 @@ public class AdmController {
 		List<Integer> numPag = new ArrayList<Integer>();//faz alterações para alista aqui!!!
 		
 		//preencher pag
-		for (int i = 0; i < totalPages; i++) {
+		for (int i = 1; i <= totalPages; i++) {
 			// add pagina ao list
 			numPag.add(i);
 		}
@@ -91,6 +108,7 @@ public class AdmController {
 		//retorna para o html da lista
 		return "listaAdm";
 	}
+	
 	@RequestMapping("alterar")
 	public String alterar(Model model, Long id) {
 		Administrador administrador = admRep.findById(id).get();
@@ -102,7 +120,7 @@ public class AdmController {
 	@RequestMapping("excluir")
 	public String excluir(Long id) {
 		admRep.deleteById(id);
-		return "redirect:listaAdmin";
+		return "redirect:listaAdmin/1";
 	}
 	
 }
