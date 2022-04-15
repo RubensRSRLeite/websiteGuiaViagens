@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymrleaf.org">
+<head>
+<meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../static/js/main.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+  <div class="row"  style="width: 50%; margin: 100px auto; display: block; border: 1px solid lightgrey; border-radius: 70px; padding: 100px; box-shadow: 5px 5px 30px 1px grey; ">
+    <form class="col s12" method="post" action="svFormLugar" enctype="multipart/form-data">
+        <h5>Este Lugar Possui:</h5>
+        <div style="display: flex;">
+        	 <p style="margin: 10px">
+		      <label>
+		         <input type="checkbox" class="validate" name="acessibilidade">
+		        <span>Acessibilidade</span>
+		      </label>
+		    </p>
+		     <p style="margin: 10px">
+		      <label>
+		          <input type="checkbox" class="validate" name="transporte">
+		        <span>Transporte</span>
+		      </label>
+		    </p>
+		     <p style="margin: 10px">
+		      <label>
+		          <input type="checkbox" class="validate" name="saude">
+		        <span>Saude</span>
+		      </label>
+		    </p>
+		     <p style="margin: 10px">
+		      <label>
+		          <input type="checkbox" class="validate" name="seguranca">
+		        <span>Segurança</span>
+		      </label>
+		    </p>
+		     <p style="margin: 10px">
+		      <label>
+		          <input type="checkbox" class="validate" name="entreterimento">
+		        <span>Entreterimento</span>
+		      </label>
+		    </p>
+		 </div>
+		 
+		 <div>
+			<div >
+			   <select name="tipoLugar.id" class="browser-default">
+			   
+			     <option value="" disabled selected>escolha uma opção</option>
+			     <option th:each="tp : ${tipos}" th:text="${tp.proposito}" th:value="${tp.id}">Option 1</option>
+			 
+			   </select>
+			  </div>
+	    	<input type="hidden" name="id" th:value="${lugar?.id}">
+	        <div class="input-field col s12">
+	          <input  type="text" class="validate" name="nome" th:value="${lugar?.nome}">
+	          <label for="email">nome</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <input  type="text" class="validate" name="cep" th:value="${lugar?.cep}"  id="cep">
+	          <label for="email">CEP</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <input readonly="readonly" type="text" class="validate" name="complemento" th:value="${lugar?.complemento}">
+	          <label for="email" >Complemento</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <input readonly="readonly" type="text" class="validate" name="logradouro" id="rua" th:value="${lugar?.logradouro}" >
+	          <label for="email"  >logradouro</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <input readonly="readonly" type="text" class="validate" name="bairro" id="bairro" th:value="${lugar?.bairro}">
+	          <label for="email">Bairro</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <input readonly="readonly" type="text" class="validate" name="cidade" id="cidade" th:value="${lugar?.cidade}" >
+	          <label for="email">Cidade</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <input readonly="readonly" type="text" class="validate" name="estado" id="uf" th:value="${lugar?.estado}" >
+	          <label for="email">Estado</label>
+	        </div>
+	        <div class="input-field col s12">
+	          <textarea class="validate" name="descricao" th:value="${lugar?.descricao}"></textarea>
+	          <label for="email">Descricao</label>
+	        </div>
+	        <div>
+	        	<label><h5>Foto</h5></label>
+	        <div >
+	          	<input type="file" class="validate" name="fileFotos" multiple accept="image/*">
+	        </div>
+	       		 <input type="hidden" th:value="${lugar?.fotos}" name="fotos">
+	        <div th:if="${lugar?.fotos?.length > 0}">
+				<h6>fotos cadastradas</h6>
+				<div>
+					<ul>
+						<li th:each="foto, i : ${lugar?.verFotos()}">
+							<a th:href="${foto}" target="_blank"><img th:src="${foto}"></a>
+							<a th:href="@{/excluirFoto(idLug=${lugar?.id}, numFoto=${i.index})}"><i class="material-icons">delete_forever</i></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+	    </div>
+        </div>
+        <div class="btn" style="width: 20%; margin: 20px auto;">
+        <button type="submit">Salvar</button>
+      </div>
+    </form> 
+  </div>
+</body>
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</html>

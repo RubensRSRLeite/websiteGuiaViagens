@@ -12,7 +12,8 @@
 </head>
 <body>
   <div class="row">
-    <form class="col s12" method="post" action="salvaLugar">
+    <form class="col s12" method="post" action="salvaLugar"
+    style="">
     	<input type="hidden" name="id" th:value="${lugar?.id}">
         <div class="input-field col s12">
           <input type="text" class="validate" name="palavraChave" th:value="${lugar?.palavraChave}" required>

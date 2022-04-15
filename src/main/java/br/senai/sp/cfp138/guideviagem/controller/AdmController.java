@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,21 @@ public class AdmController {
 	public String excluir(Long id) {
 		admRep.deleteById(id);
 		return "redirect:listaAdmin/1";
+	}
+	
+	public String login(Administrador admLogin, RedirectAttributes attr, HttpSession session) {
+		// busca o adm no banco
+		Administrador admin = admRep.findByEmailAndSenha(admLogin.getEmail(), admLogin.getSenha());
+		//verifica se existe
+		if(admin == null) {
+			attr.addFlashAttribute("mensagemErro", "Login e/ou senha invalido(s)");
+			return "redrect:/";
+			
+		} else {
+			session.setAttribute("usuarioLogado", admin);
+			return "redirect:/lugarLista/1";
+		}
+		
 	}
 	
 }

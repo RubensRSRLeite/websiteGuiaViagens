@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymrleaf.org">
+<head>
+<meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>Insert title here</title>
+</head>
+<body>
+	<header th:replace="fragment/padrao :: cabecalho"></header>
+	
+	<form style="display:flex; width: 50%; margin: auto; justify-content: space-around;" action="/busca">
+	<div style="width: 50%; margin: auto; border-radius: 50px;">
+		<input type="submit" style="width: 200px" >
+	</div>
+	<div style="width: 150%; margin: auto; border-radius: 100px;">
+		<input type="search" placeholder="busque por..." name="buscar" >
+	</div>
+	
+	</form>
+	
+	<table style="width: 50%; margin: auto; border-radius: 50px;">
+		<thead>
+			<tr>
+				<td> nome </td>
+				<td> descricao </td>
+				<td> cep </td>
+				<td> logradouro </td>
+				<td> complemento </td>
+				<td> bairro </td>
+				<td> cidade	</td>
+				<td> estado </td>				
+				<td> acessibilidade </td>
+				<td> transporte </td>
+				<td> saude </td>
+				<td> seguranca </td>
+				<td> entreterimento </td>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="l:${lug}">
+				<td th:text="${l.nome}"></td>
+				<td th:text="${l.descricao}"></td>
+				<td th:text="${l.cep}"></td>
+				<td th:text="${l.logradouro}"></td>
+				<td th:text="${l.complemento}"> </td>
+				<td th:text="${l.bairro}"> </td>
+				<td th:text="${l.cidade}">	</td>
+				<td th:text="${l.estado}"> </td>			
+				<td th:text="${l.acessibilidade}" ></td>
+				<td th:text="${l.transporte}"> </td>
+				<td th:text="${l.saude}"> </td>
+				<td th:text="${l.seguranca}"> </td>
+				<td th:text="${l.entreterimento}"> </td>
+				<td><a th:href="@{/alterarLugar(id=${l.id})}"><i class="material-icons">swap_horiz</i></a></td>
+				<td><a th:href="@{/deletarLugar(id=${l.id})}"><i class="material-icons">clear</i></a></td>
+				
+			</tr>
+			
+			
+		</tbody>	
+	</table>
+	<ul class="pagination" style="width: 10%; margin: auto;">
+		<li th:class="${pagAtual == 1 ? 'disabled' : 'waves-effect'}"><a th:href="${pagAtual > 1 ? pagAtual - 1 : '#'}"><i class="material-icons">chevron_left</i></a></li>
+		    
+		<li th:class="${pagAtual == p ? 'active blue' : 'waves-effect'}" th:each="p:${numPag}"><a th:href="${p}"><span th:text="${p}"></span></a></li>
+		    
+		<li th:class="${pagAtual == totalPages ? 'disabled' : 'waves-effect'}"><a th:href="${pagAtual < totalPages ? pagAtual + 1 : '#'}"><i class="material-icons">chevron_right</i></a></li>
+	</ul>
+</body>
+
+</html>

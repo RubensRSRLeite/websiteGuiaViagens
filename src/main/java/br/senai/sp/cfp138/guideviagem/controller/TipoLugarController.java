@@ -20,18 +20,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.senai.sp.cfp138.guideviagem.model.Administrador;
 import br.senai.sp.cfp138.guideviagem.model.TipoLugar;
-import br.senai.sp.cfp138.guideviagem.repository.LugarRepository;
+import br.senai.sp.cfp138.guideviagem.repository.TipoLugarRepository;
 
 @Controller
 public class TipoLugarController {
 	
 	@Autowired
-	private LugarRepository lugRep;
+	private TipoLugarRepository lugRep;
 	
 	//retorna para meu lugar.html
-	@RequestMapping("lugarCad")
+	@RequestMapping("LugarCadTipo")
 	public String tipoDeLugar() {
-		return"cadLugar";
+		return"cadTipoLugar";
 	}
 	
 	@RequestMapping( value = "salvaLugar", method = RequestMethod.POST)
@@ -40,7 +40,7 @@ public class TipoLugarController {
 		if(bindRes.hasErrors()) {
 			attr.addFlashAttribute("mensagemErro", "Verifique os campos...");
 			System.out.println("caiu em um erro");
-			return"redirect:lugarCad";
+			return"redirect:LugarCadTipo";
 		} else {
 			
 			try {
@@ -55,24 +55,24 @@ public class TipoLugarController {
 				System.out.println("\n\n\n falhou \n\n\n");
 			}
 			System.out.println("retornou");
-			return "forward:lugarCad";
+			return "forward:LugarCadTipo";
 			
 		}
 		
 		
 	}
 	
-	//retorna para listaLugar.html
-	@RequestMapping("lugarList/{page}")
+	//retorna para listaTipoLugar.html
+	@RequestMapping("tipoLugarList/{page}")
 	public String listaDeLugares( Model model, @PathVariable("page") int page ) {
 		System.out.println("\n\n lista de lugar \n\n");
 		//logica para a paginação
-		PageRequest pr = PageRequest.of(page-1, 8, Sort.by(Sort.Direction.ASC, "palavraChave"));
+		PageRequest pr = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.ASC, "palavraChave"));
 		
 		//encontra o lugar pelo repository
 		Page<TipoLugar> pagina =  lugRep.findAll(pr);
 		
-		model.addAttribute("lugares", pagina.getContent());
+		model.addAttribute("tipoLugares", pagina.getContent());
 	
 		//pegar total de paginas
 		int totalPages = pagina.getTotalPages();
@@ -91,26 +91,26 @@ public class TipoLugarController {
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("pagAtual", page);
 		System.out.println("\n\n retornou \n\n");
-		return "listaLugar";
+		return "listaTipoLugar";
 	}
 	
 	@RequestMapping("alterarLug")
 	public String alterarLug(Model model, Long id) {
 		TipoLugar lugar = lugRep.findById(id).get();
 		model.addAttribute("lugar", lugar);
-		return "forward:lugarCad";
+		return "forward:LugarCadTipo";
 	}
 	
 	@RequestMapping("excluirLug")
 	public String excluirLug(Long id) {
 		lugRep.deleteById(id);
-		return "redirect:lugarList/1";
+		return "redirect:tipoLugarList/1";
 	}
 	
 	@RequestMapping("busca")
 	public String buscar( Model model, String buscar ) {
 		model.addAttribute("lugares", lugRep.buscar(buscar));
-		return "listaLugar";
+		return "listaTipoLugar";
 	}
 	
 }
