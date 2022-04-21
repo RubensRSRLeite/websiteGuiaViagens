@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.senai.sp.cfp138.guideviagem.annotation.Publico;
 import br.senai.sp.cfp138.guideviagem.model.Administrador;
 import br.senai.sp.cfp138.guideviagem.repository.AdminRepository;
 import br.senai.sp.cfp138.guideviagem.util.HashUtil;
@@ -124,19 +125,33 @@ public class AdmController {
 		return "redirect:listaAdmin/1";
 	}
 	
+	@Publico
+	@RequestMapping("logar")
+	public String logar() {
+		return "cadLogin";
+	}
+	
+	@Publico
+	@RequestMapping("login")
 	public String login(Administrador admLogin, RedirectAttributes attr, HttpSession session) {
 		// busca o adm no banco
 		Administrador admin = admRep.findByEmailAndSenha(admLogin.getEmail(), admLogin.getSenha());
 		//verifica se existe
 		if(admin == null) {
 			attr.addFlashAttribute("mensagemErro", "Login e/ou senha invalido(s)");
-			return "redrect:/";
+			return "redirect:/";
 			
 		} else {
 			session.setAttribute("usuarioLogado", admin);
 			return "redirect:/lugarLista/1";
 		}
 		
+	}
+	@Publico
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return"redirect:/";
 	}
 	
 }

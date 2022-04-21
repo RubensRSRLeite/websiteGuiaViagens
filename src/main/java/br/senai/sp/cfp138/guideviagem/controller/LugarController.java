@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.senai.sp.cfp138.guideviagem.annotation.Publico;
 import br.senai.sp.cfp138.guideviagem.model.Lugares;
 import br.senai.sp.cfp138.guideviagem.model.TipoLugar;
 import br.senai.sp.cfp138.guideviagem.repository.LugarRepository;
@@ -39,12 +40,14 @@ public class LugarController {
 	@Autowired
 	private FirebaseUtil fireBaseUtil;
 	
+	@Publico
 	@RequestMapping("formLugar")
 	public String form(Model model){
 		model.addAttribute("tipos", repTipo.findAllByOrderByLocalizacaoAsc());
 	return "lugarCad";
 	}
 	
+	@Publico
 	@RequestMapping(value = "svFormLugar", method = RequestMethod.POST)
 	public String salvaFormLugar(@Valid	Lugares lugares, BindingResult bindRes, RedirectAttributes attr, @RequestParam("fileFotos") MultipartFile[] fileFotos) {
 		System.out.println("\n\n\n entrou em salvaLugar \n\n\n");
@@ -89,6 +92,7 @@ public class LugarController {
 		//}
 	}
 	
+	@Publico
 	@RequestMapping("lugarLista/{page}")
 	public String listaDeLugares( Model model, @PathVariable("page") int page ) {
 		System.out.println("\n\n lista de lugar \n\n");
@@ -120,6 +124,7 @@ public class LugarController {
 		return "lugarLista";
 	}
 	
+	@Publico
 	@RequestMapping("alterarLugar")
 	public String alterarLugar(Long id, Model model ) {
 		Lugares lugar = repLug.findById(id).get();
@@ -127,12 +132,14 @@ public class LugarController {
 		return "forward:formLugar";
 	}
 	
+	@Publico
 	@RequestMapping("deletarLugar")
 	public String deletarLugar(Long id) {
 		repLug.deleteById(id);
 		return "redirect:lugarLista/1";
 	}
 	
+	@Publico
 	@RequestMapping("excluirFoto")
 	public String excluirFoto(Long idLug, int numFoto, Model model) {
 		// buscar lugar no banco
