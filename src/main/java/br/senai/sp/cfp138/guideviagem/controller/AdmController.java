@@ -31,7 +31,8 @@ public class AdmController {
 	//variavel para pesistencia dos dados
 	@Autowired
 	private AdminRepository admRep;
-
+	
+	@Publico
 	@RequestMapping("cadAdmin")
 	public String cadAdm() {
 		System.out.println("entra no cadAdm");

@@ -14,6 +14,7 @@ import br.senai.sp.cfp138.guideviagem.model.TipoLugar;
 import br.senai.sp.cfp138.guideviagem.repository.LugarRepository;
 import br.senai.sp.cfp138.guideviagem.repository.TipoLugarRepository;
 
+
 @RestController
 @RequestMapping("/api/lugar")
 public class LugarRestController {
@@ -42,7 +43,7 @@ public class LugarRestController {
 	
 	// pega lugar pelo tipo
 	
-	@RequestMapping(value = "/tipo", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/tipo", method = RequestMethod.GET)
 	public Iterable<TipoLugar> getTipoLugar() {
 		return repTipo.findAll();
 	}
@@ -55,7 +56,11 @@ public class LugarRestController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
-	}
-
+	}*/
+	
+	/*@RequestMapping(value = "/tipo/{id", method = RequestMethod.GET)
+	public Iterable<Lugares> getLugarByTipo(@PathVariable("id") Long id){
+		return repository.findByTipoId(id);
+	}*/
 	
 }
